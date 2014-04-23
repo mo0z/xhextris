@@ -14,7 +14,7 @@ XFontStruct *textfont;
 Pixmap fond;
 Pixmap black;
 Pixmap white;
-XrmDatabase database;
+XrmDatabase xrm_database;
 XColor PieceColors[NUMBEROFPIECES+2];
 char *PieceNamedColors[NUMBEROFPIECES+2]=
   {    "darkgrey",

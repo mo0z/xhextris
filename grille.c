@@ -480,7 +480,7 @@ int main(int argc, char **argv){
     struct timeval tp;
     struct timezone tzp;
     char *fontdir = HEXFONTDIR;
-    int man_backcolor = -1;
+    int man_backcolor = 0;
     char *backcolor = "darkgrey";
     int autom=0;
     char key=0;
@@ -525,8 +525,10 @@ int main(int argc, char **argv){
     	exit(100);
     }
     // creation des couleurs si possible
+    // Si l'option -background a été choisie => XrmPutRessource
     if(man_backcolor)
-        PieceNamedColors[0] = backcolor;
+        initXrm(backcolor);
+    
 
     i = xhextrisColors(NUMBEROFPIECES);
     if (i) xhextrisEnd(i);

@@ -1,14 +1,8 @@
-#       Universite Pierre & Marie Curie
-#       Master d'informatique
-#       Architecture des Clients Internet
-#       Travaux Diriges 6:  Typographie en X-window
-#       Emmanuel Saint-James
 
 # Attention, ceci doit etre un chemin absolu accessible au serveur X
 BASE=~/Documents/Master/Semestre2/ACII/Projet
 CONNU=$(BASE)/
 SOL=$(CONNU)
-#F=$(CONNU)fontdir/
 F=/tmp/
 
 B=xhextris
@@ -26,6 +20,7 @@ D8=hsetspeed
 D9=hfont
 D10=hinit
 D11=hevents
+D12=hresource
 
 G=grille
 S=scores
@@ -33,13 +28,11 @@ A=globalx
 
 ALLD=$(CONNU)$(G).c $(CONNU)$(S).c $(CONNU)$(A).c
 
-ALLS=$(SOL)$(D1).c $(SOL)$(D2).c $(SOL)$(D3).c $(SOL)$(D4).c $(SOL)$(D5).c $(SOL)$(D6).c $(SOL)$(D7).c $(SOL)$(D8).c $(SOL)$(D9).c $(SOL)$(D10).c $(SOL)$(D11).c 
+ALLS=$(SOL)$(D1).c $(SOL)$(D2).c $(SOL)$(D3).c $(SOL)$(D4).c $(SOL)$(D5).c $(SOL)$(D6).c $(SOL)$(D7).c $(SOL)$(D8).c $(SOL)$(D9).c $(SOL)$(D10).c $(SOL)$(D11).c $(SOL)$(D12).c 
 
-ALLO=$(G).o $(S).o $(A).o $(D1).o $(D2).o $(D3).o $(D4).o $(D5).o $(D6).o $(D7).o $(D8).o $(D9).o $(D10).o $(D11).o
+ALLO=$(G).o $(S).o $(A).o $(D1).o $(D2).o $(D3).o $(D4).o $(D5).o $(D6).o $(D7).o $(D8).o $(D9).o $(D10).o $(D11).o $(D12).o
 
-O=-Wall -O4 
-#I=-I/usr/X11R6/include -I$(CONNU)
-#L=-L/usr/X11R6/lib
+O=-Wall -O4 -g
 I=-I/usr/include/X11 -I$(CONNU)
 L=-L/usr/lib/X11
 

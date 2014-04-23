@@ -36,6 +36,7 @@
 #include <getopt.h>
 #include <X11/Xutil.h>
 #include <X11/Xlib.h>
+#include <X11/Xresource.h>
 
 /* Nombre de pièces */
 #define NUMBEROFPIECES 10
@@ -100,6 +101,9 @@
 
 /* The name on the icon. */
 #define ICONNAME "xhextris"
+
+/* The name of the database */
+#define XRMDATABASE "xhextris-database"
 
 /* Definition de piece. */
 
