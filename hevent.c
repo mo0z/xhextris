@@ -11,6 +11,7 @@ char xhextrisEvent (){
             case Expose: return xhextrisExposeEvent(&report.xexpose);
             case KeyPress: return xhextrisKeyPress(&report.xkey);
             case ButtonPress: return xhextrisButtonPress(&report.xbutton);
+            case PropertyNotify: return xhextrisProperty(&report.xproperty);
             default:return 0;
         }
     }

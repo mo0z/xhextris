@@ -21,6 +21,9 @@ D9=hfont
 D10=hinit
 D11=hevents
 D12=hresource
+D13=hexternal
+D14=hscoresmultiplayer
+D15=hsend
 
 G=grille
 S=scores
@@ -28,9 +31,9 @@ A=globalx
 
 ALLD=$(CONNU)$(G).c $(CONNU)$(S).c $(CONNU)$(A).c
 
-ALLS=$(SOL)$(D1).c $(SOL)$(D2).c $(SOL)$(D3).c $(SOL)$(D4).c $(SOL)$(D5).c $(SOL)$(D6).c $(SOL)$(D7).c $(SOL)$(D8).c $(SOL)$(D9).c $(SOL)$(D10).c $(SOL)$(D11).c $(SOL)$(D12).c 
+ALLS=$(SOL)$(D1).c $(SOL)$(D2).c $(SOL)$(D3).c $(SOL)$(D4).c $(SOL)$(D5).c $(SOL)$(D6).c $(SOL)$(D7).c $(SOL)$(D8).c $(SOL)$(D9).c $(SOL)$(D10).c $(SOL)$(D11).c $(SOL)$(D12).c $(SOL)$(D13).c $(SOL)$(D14).c $(SOL)$(D15).c
 
-ALLO=$(G).o $(S).o $(A).o $(D1).o $(D2).o $(D3).o $(D4).o $(D5).o $(D6).o $(D7).o $(D8).o $(D9).o $(D10).o $(D11).o $(D12).o
+ALLO=$(G).o $(S).o $(A).o $(D1).o $(D2).o $(D3).o $(D4).o $(D5).o $(D6).o $(D7).o $(D8).o $(D9).o $(D10).o $(D11).o $(D12).o $(D13).o $(D14).o $(D15).o
 
 O=-Wall -O4 -g
 I=-I/usr/include/X11 -I$(CONNU)
@@ -53,6 +56,26 @@ $(F)/hex20.pcf: $(CONNU)hex20.bdf
 	bdftopcf <  $(CONNU)hex20.bdf > $@
 	@chmod 444 $@
 	mkfontdir $F
+
+projet: exagere relais_ligne relais_score
+
+exagere: hexagere.o
+	gcc $L $l -o $@ $^
+
+hexagere.o: hexagere.c xhextris.h
+	gcc $I -c $< -o $@
+
+relais_ligne: relais_ligne.o
+	gcc $L $l -o $@ $^
+
+relais_ligne.o: relais_ligne.c xhextris.h
+	gcc $I -c $< -o $@
+
+relais_score: relais_score.o
+	gcc $L $l -o $@ $^
+
+relais_score.o: relais_score.c xhextris.h
+	gcc $I -c $< -o $@
 
 test:
 	./$(B) -a

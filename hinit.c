@@ -26,7 +26,8 @@ int xhextrisInit(char *argv[], int argc){
     
     XSelectInput(dpy, win,  KeyPressMask | ExposureMask );
     XSelectInput(dpy, wincur,
-	       ButtonPressMask|ButtonReleaseMask|ButtonMotionMask);
+	       ButtonPressMask|ButtonReleaseMask|ButtonMotionMask
+           |PropertyChangeMask);
     XStoreName(dpy, win, WINDOWNAME);
     XMapWindow(dpy, win);
 

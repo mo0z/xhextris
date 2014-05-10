@@ -11,7 +11,7 @@ void xhextrisHomepage()
 
     XClearWindow(dpy,win);
     XMapWindow(dpy,wincur);
-
+    fprintf(stderr, "wincur > %d\n", (int)wincur);
     for (i = 0, y=((CURSOR_H<<2))+32; i < 10; i++,y+=16)
       DISPLAYTEXT(50, y, help[i]);
 

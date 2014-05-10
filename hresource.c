@@ -14,6 +14,7 @@ void initXrm(char *backcolor){
     for(i = 0; i < NUMBEROFPIECES + 2; i++){
         XrmValue value;
         char c[4];
+
         sprintf(c, "%d", i);
         value.addr = PieceNamedColors[i];
         value.size = strlen(PieceNamedColors[i]);

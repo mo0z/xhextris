@@ -31,30 +31,24 @@ char xhextrisButtonPress(XButtonEvent *ev){
     return 0;
 }
 
+char xhextrisProperty(XPropertyEvent *ev){
+    int format;
+    char read[128];
+    unsigned long lus, restants;
+    Atom type_obtenu;
 
-/*char xhextrisExposeEvent(XExposeEvent *ev){
-    if(ev->count){
-        return 'r';
-    }
+    XGetWindowProperty(dpy,
+		     wincur,
+		     atomes[1],
+		     0,        /* pas de decalage dans la lecture      */
+		     64,       /* multiple de 32 bits, soit 256 octets */
+		     False,    /*  detruire une fois la valeur lue     */
+		     AnyPropertyType,  /* pas de type precis demande   */
+		     &type_obtenu,     /* le type obtenu               */
+		     &format,          /* son format 8, 16 ou 32 bits  */
+		     &lus,	 /* quantite lue                 */
+		     &restants,        /* le reste = offre - demande   */
+		     (unsigned char **)read); /* la valeur lue            */ 
     return 0;
 }
-
-char xhextrisKeyPress(XKeyPressedEvent *ev){
-    char buff[8];
-    KeySym keys;
-    XComposeStatus composes;
-    XLookupString(ev, buff, 8, &keys, &composes);
-    return buff[0];
-}
-
-char xhextrisButtonPress(XButtonEvent *ev){
-    XEvent xe;
-    xhextrisSetspeed(ev->x);
-    while(1){
-        XMaskEvent(dpy, ButtonReleaseMask | Button1MotionMask, &xe);
-        if(xe.type == ButtonRelease) break;
-        else xhextrisSetspeed(xe.x);
-    }
-    return 0;
-}*/
 

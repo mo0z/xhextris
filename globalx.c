@@ -16,6 +16,7 @@ Pixmap black;
 Pixmap white;
 XrmDatabase xrm_database;
 XColor PieceColors[NUMBEROFPIECES+2];
+Atom atomes[2];
 char *PieceNamedColors[NUMBEROFPIECES+2]=
   {    "darkgrey",
 	"Orange1",

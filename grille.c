@@ -311,6 +311,11 @@ void update_drop(piece_t *npiece, piece_t *piece)
       /* impossible de descendre plus bas */
 	drop_piece(piece);
 	cleared_rows = check_rows(grid);
+    
+    // Question 4)
+    // Envoyer les scores aux users
+    send_cleared_rows(external_users, cleared_rows);
+
 	score += (int)((cleared_rows<<8) / button_speed);
 	rows += cleared_rows;
 	xhextrisScores(score,rows);
@@ -390,6 +395,11 @@ void update_fall(piece_t *piece, piece_t tpiece)
   }
 }
 
+void double_speed(){
+    fprintf(stderr, "Double speed!\n");
+    speed = speed / 2;
+}
+
 /* Aiguillage sur la touche frappée au clavier */
 
 void do_choice(char choice, piece_t *npiece, piece_t *piece)
@@ -431,6 +441,11 @@ void do_choice(char choice, piece_t *npiece, piece_t *piece)
 	new_game(npiece, piece);
 	redraw_game(npiece,piece);
 	break;
+    case '2':
+        if(!game_over)
+            double_speed();
+
+    break;
     }
 }
 
@@ -481,12 +496,15 @@ int main(int argc, char **argv){
     struct timezone tzp;
     char *fontdir = HEXFONTDIR;
     int man_backcolor = 0;
-    char *backcolor = "darkgrey";
+    int multiplayer = 0;
+    char backcolor[120];
     int autom=0;
     char key=0;
     fd_set fdst;
     int i, sock, oldscore = -1;
     piece_t npiece, piece;
+    int users_start;
+    int option_index;
     
     setlocale(LC_MESSAGES, "");
         { // traitement des options
@@ -495,6 +513,7 @@ int main(int argc, char **argv){
             	"-h, --help\t\t\tDisplay help message.\n"
             	"-a, --auto\t\t\tComputer plays alone.\n"
                 "-b, --background string\t\t\tChoose the background color.\n"
+                "-u, --users <IP/userid>\t\t\tSpecifies the users that will play.\n"
             	"-F, --font-dir string\t"
             	"string indicates which font directory to use.\n";
             struct option options[] = {
@@ -502,14 +521,24 @@ int main(int argc, char **argv){
             	{"auto", no_argument, NULL, 'a'},
                 {"background", required_argument, NULL, 'b'},
             	{"font-dir", required_argument, NULL, 'F'},
+                {"users", no_argument, NULL, 'u'},
             	{NULL, 0, NULL, 0}};
             char opt;
 
-            while ((opt = getopt_long (argc, argv, "habF:", options, NULL)) != -1)
+            while ((opt = getopt_long (argc, argv, "habuF:", options,&option_index)) != -1)
             	switch(opt){
                 	case 'h': printf(help_msg, argv[0]); exit(0);
                 	case 'a': autom = 1; break;
-                    case 'b': backcolor = optarg; man_backcolor = 1; break;
+                    case 'b': 
+                        strcpy(backcolor, optarg);
+                        man_backcolor = 1;
+                        break;
+                    case 'u':
+                        multiplayer = 1;
+                        users_start = option_index - 2; 
+                        printf("argv[i] = %s\n", argv[users_start]);
+                        external_users = external_users_init(argv, users_start, argc);
+                        break; 
                 	case 'F': fontdir = optarg; break;
     
                 	default:  fprintf(stderr, help_msg, argv[0]); exit(1);
@@ -524,12 +553,18 @@ int main(int argc, char **argv){
     	fprintf(stderr,"xhextris: Can't guess socket connection.\n");
     	exit(100);
     }
-    // creation des couleurs si possible
+    // Question 1) creation des couleurs si possible
     // Si l'option -background a été choisie => XrmPutRessource
-    if(man_backcolor)
+    if(man_backcolor){
+        fprintf(stderr, "Backcolor: %s\n", backcolor);
         initXrm(backcolor);
-    
+    }
 
+    // Question 5)
+    // Créer la fenêtre annexe
+    if(multiplayer)
+        xhextrisScoreMultiplayer();
+    
     i = xhextrisColors(NUMBEROFPIECES);
     if (i) xhextrisEnd(i);
     // creation du contexte graphique pour les pieces

@@ -37,6 +37,7 @@
 #include <X11/Xutil.h>
 #include <X11/Xlib.h>
 #include <X11/Xresource.h>
+#include <X11/Xatom.h>
 
 /* Nombre de pièces */
 #define NUMBEROFPIECES 10
@@ -124,6 +125,14 @@ typedef struct high_score_s
     int rows;
     int pieces;
 } high_score_t;
+
+typedef struct external_user_s{
+    char user_ip[30];
+    char user_id[MAXUSERIDLENGTH];
+    int user_score;
+    struct external_user_s *next_user;
+}external_user_t;
+
 
 #ifdef DEBUG
 #define DEBUGPRINT(x) {printf x;fflush(NULL);}
